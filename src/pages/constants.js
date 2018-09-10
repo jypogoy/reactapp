@@ -7,6 +7,7 @@ export const styles = theme => ({
     appName: {
       flexGrow: 1,
       fontWeight: 'bold',      
+      color: '#CCC',
     },
     toolbar: {
       paddingRight: 24, // keep right padding when drawer closed
