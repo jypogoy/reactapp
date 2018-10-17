@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 
 import * as constants from './constants';
 
 class Notifications extends Component {
+
+  componentWillMount() {
+    this.props.changeTitle('Notifications');
+  }
+
   render() {
 
     const { classes } = this.props;
@@ -12,9 +17,7 @@ class Notifications extends Component {
     return (
       <div>
         <div className={classes.appBarSpacer} />
-        <Typography variant="display1" gutterBottom>
-            Notifications
-        </Typography>
+        Some notifications here...
       </div>
     )
   }

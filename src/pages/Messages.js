@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 
-import * as constants from '../pages/constants';
+import * as constants from './constants';
 
 class Messages extends Component {
+
+  componentWillMount() {
+    this.props.changeTitle('Messages');
+  }
+
   render() {
 
     const { classes } = this.props;
@@ -12,9 +17,7 @@ class Messages extends Component {
     return (
       <div>
         <div className={classes.appBarSpacer} />
-        <Typography variant="display1" gutterBottom>
-            Messages
-        </Typography>
+        Some messages here...
       </div>
     )
   }

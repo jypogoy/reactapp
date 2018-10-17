@@ -5,9 +5,13 @@ import { withStyles } from '@material-ui/core';
 import OrderChart from '../components/dashboard/OrderChart';
 import ProductTable from '../components/dashboard/ProductTable';
 
-import * as constants from '../pages/constants';
+import * as constants from './constants';
 
 class Dashboard extends Component {
+
+    componentWillMount() {
+        this.props.changeTitle('Dashboard');
+    }
 
     render() {
 
@@ -16,7 +20,7 @@ class Dashboard extends Component {
         return (            
             <div>
                 <div className={classes.appBarSpacer} />
-                <Typography variant="display1" gutterBottom>
+                <Typography variant="display1" gutterBottom>                    
                     Orders
                 </Typography>
                 <Typography component="div" className={classes.chartContainer}>
