@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core';
 import OrderChart from '../components/dashboard/OrderChart';
 import ProductTable from '../components/dashboard/ProductTable';
 
-import * as constants from './constants';
+import { styles } from './constants';
 
 class Dashboard extends Component {
 
@@ -37,4 +37,4 @@ class Dashboard extends Component {
     }
 }
 
-export default withStyles(constants.styles)(Dashboard);
+export default withStyles(styles)(Dashboard);

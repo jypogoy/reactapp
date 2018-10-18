@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 
-import * as constants from './constants';
+import { styles } from './constants';
 
 class Messages extends Component {
 
@@ -23,4 +23,4 @@ class Messages extends Component {
   }
 }
 
-export default withStyles(constants.styles)(Messages);
+export default withStyles(styles)(Messages);

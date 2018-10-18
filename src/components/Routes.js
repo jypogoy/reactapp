@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { Route, HashRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 
-import Dashboard from '../pages/Dashboard'
-import Orders from '../pages/Orders'
-import Customers from '../pages/Customers'
-import Reports from '../pages/Reports'
-import Integrations from '../pages/Integrations'
-import Messages from '../pages/Messages'
+import Dashboard from '../pages/Dashboard';
+import Posts from '../pages/Posts';
+import Orders from '../pages/Orders';
+import Customers from '../pages/Customers';
+import Reports from '../pages/Reports';
+import Integrations from '../pages/Integrations';
+import Messages from '../pages/Messages';
 import Notifications from '../pages/Notifications';
 import Feedbacks from '../pages/Feedbacks';
 import Help from '../pages/Help';
@@ -21,6 +22,7 @@ class Routes extends Component {
             <main className={this.props.classes.content}>                
                 {/* <Route path="/dashboard" component={Dashboard} /> */}
                 <Route path="/dashboard" render={(props) => <Dashboard {...props} changeTitle={this.props.changeTitle} />} />
+                <Route path="/posts" render={(props) => <Posts {...props} changeTitle={this.props.changeTitle} />} />
                 <Route path="/orders" render={(props) => <Orders {...props} changeTitle={this.props.changeTitle} />} />
                 <Route exact path="/customers" render={(props) => <Customers {...props} changeTitle={this.props.changeTitle} />} />
                 <Route exact path="/reports" render={(props) => <Reports {...props} changeTitle={this.props.changeTitle} />} />
