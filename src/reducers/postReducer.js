@@ -8,7 +8,7 @@ export default (
     action) => {
 
     switch (action.type) {
-        case 'FETCH_POSTS':
+        case 'FETCH_POSTS_PENDING':
             return {...state, fetching: true};
     
         case 'FETCH_POSTS_REJECTED':

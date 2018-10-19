@@ -14,8 +14,9 @@ import FeedbackIcon from '@material-ui/icons/Feedback';
 import HelpIcon from '@material-ui/icons/Help';
 import Typography from '@material-ui/core/Typography';
 import ProfileMenu from './ProfileMenu';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 
-import * as constants from '../pages/constants';
+import { styles } from './constants';
 
 class ToolBar extends Component {
     render() {
@@ -34,6 +35,7 @@ class ToolBar extends Component {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="title" color="inherit" noWrap className={this.props.classes.title}>
+                        <QuestionAnswerIcon /> 
                         {this.props.title}
                     </Typography>
                     <Tooltip title="Messages">
@@ -75,4 +77,4 @@ class ToolBar extends Component {
     }
 }
 
-export default withStyles(constants.styles)(ToolBar);
+export default withStyles(styles)(ToolBar);

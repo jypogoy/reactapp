@@ -2,18 +2,18 @@ import React, { Component } from 'react'
 import { Route, HashRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 
-import Dashboard from '../pages/Dashboard';
-import Posts from '../pages/Posts';
-import Orders from '../pages/Orders';
-import Customers from '../pages/Customers';
-import Reports from '../pages/Reports';
-import Integrations from '../pages/Integrations';
-import Messages from '../pages/Messages';
-import Notifications from '../pages/Notifications';
-import Feedbacks from '../pages/Feedbacks';
-import Help from '../pages/Help';
+import Dashboard from '../components/dashboard/Dashboard';
+import Posts from '../components/post/Posts';
+import Orders from '../components/order/Orders';
+import Customers from '../components/customer/Customers';
+import Reports from '../components/report/Reports';
+import Integrations from '../components/integration/Integrations';
+import Messages from '../components/message/Messages';
+import Notifications from '../components/notification/Notifications';
+import Feedbacks from '../components/feedback/Feedbacks';
+import Help from '../components/help/Help';
 
-import * as constants from '../pages/constants';
+import { styles } from './constants';
 
 class Routes extends Component {
   render() {
@@ -37,4 +37,4 @@ class Routes extends Component {
   }
 }
 
-export default withStyles(constants.styles)(Routes)
+export default withStyles(styles)(Routes)

@@ -2,28 +2,25 @@ import React, { Component } from 'react';
 // import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 
-import { styles } from './constants';
-import OrderTable from '../components/order/OrderTable';
+import { styles } from '../constants';
 
-class Orders extends Component {
+class Customers extends Component {
 
   componentWillMount() {
-      this.props.changeTitle('Orders');
+    this.props.changeTitle('Customers');
   }
 
   render() {
-
+    
     const { classes } = this.props;
 
     return (
       <div>
         <div className={classes.appBarSpacer} />
-        <div className={classes.tableContainer}>
-            <OrderTable />
-        </div> 
+        Some customer contents here...
       </div>
     )
   }
 }
 
-export default withStyles(styles)(Orders);
+export default withStyles(styles)(Customers);

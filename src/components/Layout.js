@@ -11,7 +11,7 @@ import ToolBar from './ToolBar';
 import DrawerMenu from './DrawerMenu';
 import Routes from './Routes';
 
-import * as constants from '../pages/constants';
+import { styles } from './constants';
 
 class Layout extends Component {
 
@@ -78,4 +78,4 @@ Layout.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(constants.styles)(Layout)
+export default withStyles(styles)(Layout)

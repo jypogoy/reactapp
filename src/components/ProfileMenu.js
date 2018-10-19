@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-import * as constants from '../pages/constants';
+import { styles } from './constants';
 
 class ProfileMenu extends Component {
 
@@ -72,4 +72,4 @@ class ProfileMenu extends Component {
     }
 }
 
-export default withStyles(constants.styles)(ProfileMenu);
+export default withStyles(styles)(ProfileMenu);

@@ -2,25 +2,25 @@ import React, { Component } from 'react';
 // import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 
-import * as constants from './constants';
+import { styles } from '../constants';  
 
-class Customers extends Component {
+class Messages extends Component {
 
   componentWillMount() {
-    this.props.changeTitle('Customers');
+    this.props.changeTitle('Messages');
   }
 
-  render() {
-    
+  render() {  
+
     const { classes } = this.props;
 
     return (
       <div>
         <div className={classes.appBarSpacer} />
-        Some customer contents here...
+        Some messages here...
       </div>
     )
   }
 }
 
-export default withStyles(constants.styles)(Customers);
+export default withStyles(styles)(Messages);

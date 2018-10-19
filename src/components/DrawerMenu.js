@@ -8,7 +8,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 
-import * as constants from '../pages/constants';
+import { styles } from './constants';
 import { mainListItems, secondaryListItems } from './menuList';
 
 class DrawerMenu extends Component {
@@ -33,4 +33,4 @@ class DrawerMenu extends Component {
     }
 }
 
-export default withStyles(constants.styles)(DrawerMenu);
+export default withStyles(styles)(DrawerMenu);

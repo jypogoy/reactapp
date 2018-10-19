@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 
-import OrderChart from '../components/dashboard/OrderChart';
-import ProductTable from '../components/dashboard/ProductTable';
+import OrderChart from './OrderChart';
+import ProductTable from './ProductTable';
 
-import { styles } from './constants';
+import { styles } from '../constants';
 
 class Dashboard extends Component {
 

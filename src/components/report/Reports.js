@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 // import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 
-import * as constants from './constants';
+import { styles } from '../constants';
 
-class Notifications extends Component {
+class Reports extends Component {
 
   componentWillMount() {
-    this.props.changeTitle('Notifications');
+    this.props.changeTitle('Reports');
   }
 
   render() {
@@ -17,10 +17,10 @@ class Notifications extends Component {
     return (
       <div>
         <div className={classes.appBarSpacer} />
-        Some notifications here...
+        Some reports contents here...
       </div>
     )
   }
 }
 
-export default withStyles(constants.styles)(Notifications);
+export default withStyles(styles)(Reports);
