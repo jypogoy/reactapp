@@ -14,11 +14,38 @@ import FeedbackIcon from '@material-ui/icons/Feedback';
 import HelpIcon from '@material-ui/icons/Help';
 import Typography from '@material-ui/core/Typography';
 import ProfileMenu from './ProfileMenu';
+
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PeopleIcon from '@material-ui/icons/People';
+import BarChartIcon from '@material-ui/icons/BarChart';
+import LayersIcon from '@material-ui/icons/Layers';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import { styles } from './constants';
 
 class ToolBar extends Component {
+
+    showIcon(title) {
+        switch (title) {
+            case 'Dashboard':
+                return <DashboardIcon /> 
+            case 'Posts':
+                return <QuestionAnswerIcon /> 
+            case 'Orders':
+                return <ShoppingCartIcon />   
+            case 'Customers':
+                return <PeopleIcon />
+            case 'Reports':
+                return <BarChartIcon />   
+            case 'Integrations':
+                return <LayersIcon />                
+            default:
+                break;
+        }        
+    }
+
     render() {
         return (
             <HashRouter>
@@ -34,8 +61,8 @@ class ToolBar extends Component {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="title" color="inherit" noWrap className={this.props.classes.title}>
-                        <QuestionAnswerIcon /> 
+                    {this.showIcon(this.props.title)}
+                    <Typography variant="title" color="inherit" noWrap className={this.props.classes.title}>                        
                         {this.props.title}
                     </Typography>
                     <Tooltip title="Messages">

@@ -2,129 +2,211 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { withStyles } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import Typography from '@material-ui/core/Typography';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Checkbox from '@material-ui/core/Checkbox';
 
-import ReactTable from 'react-table';
-import 'react-table/react-table.css';
 
-import { styles } from '../constants';
+import EnhancedTableToolbar from './EnhancedTableToolbar';
+import EnhancedTableHead from './EnhancedTableHead';
+
 import * as postActions from '../../actions/postActions';
 
+function desc(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function stableSort(array, cmp) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = cmp(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map(el => el[0]);
+}
+
+function getSorting(order, orderBy) {
+  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
+}
+
+const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+  },
+  table: {
+    minWidth: 1020,
+  },
+  tableWrapper: {
+    overflowX: 'auto',
+  },
+});
+
 class Posts extends Component {
+  state = {
+    order: 'asc',
+    orderBy: 'title',
+    selected: [],
+    page: 0,
+    rowsPerPage: 5,
+  };  
 
-    componentWillMount() {
-        this.props.changeTitle('Posts');
-        this.props.postActions.fetchPosts();                
+  handleRequestSort = (event, property) => {
+    const orderBy = property;
+    let order = 'desc';
+
+    if (this.state.orderBy === property && this.state.order === 'desc') {
+      order = 'asc';
     }
 
-    render() {
-        
-        const { classes } = this.props;
-        const { posts } = this.props.posts;
-        const columns = [
-            {
-                Header: 'User',
-                accessor: 'userId'
-            },
-            {
-                Header: 'ID',
-                accessor: 'id'
-            },
-            {
-                Header: 'Title',
-                accessor: 'title'
-            },
-            {
-                Header: 'Body',
-                accessor: 'body'
-            }
-        ];
-        
-        return (
-            <div>
-                <div className={classes.appBarSpacer} />
-                {/* <Grid container spacing={24}>
-                    <Grid item xs>                        
-                        <Typography variant="display1" gutterBottom>                    
-                            <QuestionAnswerIcon /> Posts
-                        </Typography>
-                    </Grid>
-                    <Grid item xs>
-                        <Button variant="contained" color="primary" aria-label="Add" className={classes.button}>
-                            New Post
-                            <AddIcon className={classes.rightIcon} />
-                        </Button>
-                        <Button variant="contained" size="small" color="secondary" aria-label="Add" className={classes.button}>
-                            Delete Posts
-                            <DeleteIcon className={classes.rightIcon} />
-                        </Button>
-                    </Grid>    
-                </Grid> */}
-                {/* <Divider  />
-                <div className={classes.contentSpacer} /> */}
-                <div className={classes.tableContainer}>
-                    <ReactTable 
-                        data={posts}
-                        loading={this.props.posts.fetching}
-                        columns={columns}
-                        filterable
-                        defaultPageSize={10}
-                        className="-striped -highlight"
-                    />
-                    
-                    <Paper className={classes.root}>
-                        <Table className={classes.table}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell numeric>User</TableCell>
-                                <TableCell numeric>ID</TableCell>
-                                <TableCell>Title</TableCell>
-                                <TableCell>Body</TableCell>
-                            </TableRow>
-                        </TableHead>
-                            <TableBody>                            
-                                {posts.map(n => {
-                                    return (
-                                        <TableRow key={n.id}>
-                                            <TableCell component="th" scope="row">{n.userId}</TableCell>
-                                            <TableCell numeric>{n.id}</TableCell>
-                                            <TableCell numeric>{n.title}</TableCell>
-                                            <TableCell numeric>{n.body}</TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                            </TableBody>
-                        </Table>
-                    </Paper>
-                </div> 
-            </div>           
-        )
+    this.setState({ order, orderBy });
+  };
+
+  handleSelectAllClick = event => {
+    if (event.target.checked) {
+      this.setState(state => ({ selected: state.data.map(n => n.id) }));
+      return;
     }
+    this.setState({ selected: [] });
+  };
+
+  handleClick = (event, id) => {
+    const { selected } = this.state;
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+
+    this.setState({ selected: newSelected });
+  };
+
+  handleChangePage = (event, page) => {
+    this.setState({ page });
+  };
+
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value });
+  };
+
+  isSelected = id => this.state.selected.indexOf(id) !== -1;
+
+  componentWillMount() {
+    this.props.changeTitle('Posts');
+    this.props.postActions.fetchPosts();
+  }
+
+  render() {
+
+    const { classes } = this.props;    
+    const data = this.props.posts.posts;
+    const { order, orderBy, selected, rowsPerPage, page } = this.state;
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+
+    return (
+      <Paper className={classes.root}>
+        <EnhancedTableToolbar numSelected={selected.length} />
+        <div className={classes.tableWrapper}>
+          <Table className={classes.table} aria-labelledby="tableTitle">
+            <EnhancedTableHead
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={this.handleSelectAllClick}
+              onRequestSort={this.handleRequestSort}
+              rowCount={data.length}
+            />
+            <TableBody>
+              {stableSort(data, getSorting(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map(n => {
+                  const isSelected = this.isSelected(n.id);
+                  return (
+                    <TableRow
+                      hover
+                      onClick={event => this.handleClick(event, n.id)}
+                      role="checkbox"
+                      aria-checked={isSelected}
+                      tabIndex={-1}
+                      key={n.id}
+                      selected={isSelected}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox checked={isSelected} />
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        {n.userId}
+                      </TableCell>
+                      <TableCell numeric>{n.id}</TableCell>
+                      <TableCell>{n.title}</TableCell>
+                      <TableCell >{n.body}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 49 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        <TablePagination
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page',
+          }}
+          onChangePage={this.handleChangePage}
+          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+        />
+      </Paper>
+    );
+  }
 }
 
 function mapStateToProps(state) {
-    return {
-        posts: state.posts
-    };
+  return {
+      posts: state.posts
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        postActions: bindActionCreators(postActions, dispatch)
-    };
+  return {
+      postActions: bindActionCreators(postActions, dispatch)
+  };
 }
+
+Posts.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(connect(mapStateToProps,mapDispatchToProps)(Posts));
