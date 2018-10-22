@@ -9,6 +9,16 @@ import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
+const CustomTableCell = withStyles(theme => ({
+    head: {
+        backgroundColor: theme.palette.grey[300],
+        //color: theme.palette.common.white,
+    },
+    body: {
+        fontSize: 14,
+    },
+}))(TableCell);
+
 const rows = [
     { id: 'userId', numeric: false, disablePadding: true, label: 'User' },
     { id: 'id', numeric: true, disablePadding: false, label: 'Id' },
@@ -28,35 +38,35 @@ class EnhancedTableHead extends Component {
         return (        
             <TableHead>
                 <TableRow>
-                    <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                    />
-                    </TableCell>
+                    <CustomTableCell padding="checkbox">
+                        <Checkbox
+                            indeterminate={numSelected > 0 && numSelected < rowCount}
+                            checked={numSelected === rowCount}
+                            onChange={onSelectAllClick}
+                        />
+                    </CustomTableCell>
                     {rows.map(row => {
                     return (
-                        <TableCell
-                        key={row.id}
-                        numeric={row.numeric}
-                        padding={row.disablePadding ? 'none' : 'default'}
-                        sortDirection={orderBy === row.id ? order : false}
+                        <CustomTableCell
+                            key={row.id}
+                            numeric={row.numeric}
+                            padding={row.disablePadding ? 'none' : 'default'}
+                            sortDirection={orderBy === row.id ? order : false}
                         >
-                        <Tooltip
-                            title="Sort"
-                            placement={row.numeric ? 'bottom-end' : 'bottom-start'}
-                            enterDelay={300}
-                        >
-                            <TableSortLabel
-                            active={orderBy === row.id}
-                            direction={order}
-                            onClick={this.createSortHandler(row.id)}
+                            <Tooltip
+                                title="Sort"
+                                placement={row.numeric ? 'bottom-end' : 'bottom-start'}
+                                enterDelay={300}
                             >
-                            {row.label}
-                            </TableSortLabel>
-                        </Tooltip>
-                        </TableCell>
+                                <TableSortLabel
+                                    active={orderBy === row.id}
+                                    direction={order}
+                                    onClick={this.createSortHandler(row.id)}
+                                >
+                                {row.label}
+                                </TableSortLabel>
+                            </Tooltip>
+                        </CustomTableCell>
                     );
                     }, this)}
                 </TableRow>

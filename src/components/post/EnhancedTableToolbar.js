@@ -37,7 +37,9 @@ const styles = theme => ({
 
 class EnhancedTableToolbar extends Component {
     render() {
+        
         const { numSelected, classes } = this.props;
+        
         return (
             <Toolbar
                 className={classNames(classes.root, {
@@ -45,31 +47,31 @@ class EnhancedTableToolbar extends Component {
                 })}
             >
                 <div className={classes.title}>
-                {numSelected > 0 ? (
-                    <Typography color="inherit" variant="subtitle1">
-                    {numSelected} selected
-                    </Typography>
-                ) : (
-                    <Typography variant="h6" id="tableTitle">
-                    Posts
-                    </Typography>
-                )}
+                    {numSelected > 0 ? (
+                        <Typography color="inherit" variant="subtitle1">
+                            {numSelected} selected
+                        </Typography>
+                    ) : (
+                        <Typography variant="h6" id="tableTitle">
+                            Posts
+                        </Typography>
+                    )}
                 </div>
                 <div className={classes.spacer} />
                 <div className={classes.actions}>
-                {numSelected > 0 ? (
-                    <Tooltip title="Delete">
-                    <IconButton aria-label="Delete">
-                        <DeleteIcon />
-                    </IconButton>
-                    </Tooltip>
-                ) : (
-                    <Tooltip title="Filter list">
-                    <IconButton aria-label="Filter list">
-                        <FilterListIcon />
-                    </IconButton>
-                    </Tooltip>
-                )}
+                    {numSelected > 0 ? (
+                        <Tooltip title="Delete">
+                            <IconButton aria-label="Delete">
+                                <DeleteIcon />
+                            </IconButton>
+                        </Tooltip>
+                    ) : (
+                        <Tooltip title="Filter list">
+                            <IconButton aria-label="Filter list">
+                                <FilterListIcon />
+                            </IconButton>
+                        </Tooltip>
+                    )}
                 </div>
             </Toolbar>
         )

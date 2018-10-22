@@ -71,6 +71,7 @@ export const styles = theme => ({
       padding: theme.spacing.unit * 3,
       height: '100vh',
       overflow: 'auto',
+      marginTop: 40,
     },
     chartContainer: {
       marginLeft: -22,
